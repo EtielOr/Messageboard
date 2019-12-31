@@ -6,6 +6,7 @@ import com.example.etiel.messageboard.messageboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class PostController {
 
 
     @PostMapping
-    public void newPost(@RequestBody Post newPost)
+    public void newPost(@Valid @RequestBody Post newPost)
     {
         postService.addPost(newPost);
     }
@@ -44,7 +45,7 @@ public class PostController {
     public void updatePost(@RequestParam("id") Long id, @RequestParam("title") String title,
                              @RequestParam("message") String message)
     {
-        postService.updatePost(id,title,message);;
+        postService.updatePost(id,title,message);
     }
 
     @DeleteMapping

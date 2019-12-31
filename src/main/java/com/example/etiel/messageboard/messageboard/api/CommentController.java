@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -23,7 +24,7 @@ public class CommentController {
     }
 
     @PostMapping("/post/{postId}")
-    public void newComment(@PathVariable Long postId,@RequestBody Comment newComment)
+    public void newComment(@PathVariable Long postId,@Valid @RequestBody Comment newComment)
     {
         commentService.addComment(postId,newComment);
     }

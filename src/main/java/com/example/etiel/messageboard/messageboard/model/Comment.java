@@ -22,7 +22,7 @@ public class Comment {
 
     @Getter
     @Setter
-    @NotBlank(message = "replay can't be empty")
+    @NotBlank(message = "comment can't be empty")
     private String message;
 
     @Getter
