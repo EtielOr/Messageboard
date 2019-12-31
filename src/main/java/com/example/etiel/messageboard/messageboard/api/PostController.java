@@ -1,16 +1,17 @@
 package com.example.etiel.messageboard.messageboard.api;
 
 import com.example.etiel.messageboard.messageboard.model.Post;
+import com.example.etiel.messageboard.messageboard.model.PostPreview;
 import com.example.etiel.messageboard.messageboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@RequestMapping("/")
+
+@CrossOrigin
+@RequestMapping("/api/post")
 @RestController
 public class PostController {
 
@@ -21,24 +22,34 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/Post")
-    public List<Post> test()
-    {
 
-        postService.addPost("title " , "message ");
-        return  postService.getAllPost();
-    }
-
-    @GetMapping("/UpdateTest")
-    public String aa()
+    @PostMapping
+    public void newPost(@RequestBody Post newPost)
     {
-        postService.updatePost(1L,"aaaaaaaa","aaaaaaaaaaaaaa");
-        return "fff";
+        postService.addPost(newPost);
     }
 
     @GetMapping
-    String hello()
+    public List<PostPreview> getPostList()
     {
-        return "Hello";
+        return  postService.getAllPost();
     }
+
+    @GetMapping("/{id}")
+    public Optional<Post> getPost(@PathVariable Long id) {
+        return postService.getPost(id);
+    }
+
+    @PutMapping
+    public void updatePost(@RequestParam("id") Long id, @RequestParam("title") String title,
+                             @RequestParam("message") String message)
+    {
+        postService.updatePost(id,title,message);;
+    }
+
+    @DeleteMapping
+    public  void deletePost(@RequestParam("id") Long id) {
+        postService.deletePost(id);
+    }
+
 }
